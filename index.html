@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Sound2Scene synthesizes images of natural scene from the input sound.">
+  <meta name="keywords" content="Sound2Scene, Cross-modal generation">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sound to Visual Scene Generation by Audio-to-Visual Latent Alignment</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+<!--  <link rel="icon" href="./static/images/favicon.svg">-->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+<!--  <div class="navbar-menu">-->
+<!--    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">-->
+<!--      <a class="navbar-item" href="https://keunhong.com">-->
+<!--      <span class="icon">-->
+<!--          <i class="fas fa-home"></i>-->
+<!--      </span>-->
+<!--      </a>-->
+<!--    </div>-->
+
+<!--  </div>-->
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Sound to Visual Scene Generation <br> by Audio-to-Visual Latent Alignment</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://ami.postech.ac.kr/members/kim-sung-bin">Kim Sung-Bin</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://ardasnck.github.io/">Arda Senocak</a><sup>2</sup>,</span>
+            <span class="author-block">
+              <a href="https://ami.postech.ac.kr/members/ha-hyun-woo">Hyunwoo Ha</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://andrewowens.com/">Andrew Owens</a><sup>3</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://ami.postech.ac.kr/members/tae-hyun-oh">Tae-Hyun Oh</a><sup>1</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>POSTECH,&nbsp</span>
+            <span class="author-block"><sup>2</sup>KAIST,&nbsp</span>
+            <span class="author-block"><sup>3</sup>University of Michigan</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper (coming soon)</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv (coming soon)</span>
+                </a>
+              </span>
+              <!-- Video Link. -->
+              <span class="link-block">
+                <a class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video (coming soon)</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+<!--                <a href="https://github.com/google/nerfies"-->
+<!--                   class="external-link button is-normal is-rounded is-dark">-->
+                <a class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code (coming soon)</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+<!--              <span class="link-block">-->
+<!--                <a href="https://github.com/google/nerfies/releases/tag/0.1"-->
+<!--                   class="external-link button is-normal is-rounded is-dark">-->
+<!--                  <span class="icon">-->
+<!--                      <i class="far fa-images"></i>-->
+<!--                  </span>-->
+<!--                  <span>Data</span>-->
+<!--                  </a>-->
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img src="./static/images/teaser.png"
+                 class="interpolation-image"
+                 alt="Interpolate start reference image."/>
+      <h2 class="subtitle has-text-centered">
+        <span class="dnerf">Sound2Scene</span> synthesizes images of natural scene from the input sound.
+      </h2>
+    </div>
+  </div>
+</section>
+
+
+<!--<section class="hero is-light is-small">-->
+<!--  <div class="hero-body">-->
+<!--    <div class="container">-->
+<!--      <div id="results-carousel" class="carousel results-carousel">-->
+<!--        <div class="item item-steve">-->
+<!--          <video poster="" id="steve" autoplay controls muted loop playsinline height="100%">-->
+<!--            <source src="./static/videos/steve.mp4"-->
+<!--                    type="video/mp4">-->
+<!--          </video>-->
+<!--        </div>-->
+<!--        <div class="item item-chair-tp">-->
+<!--          <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">-->
+<!--            <source src="./static/videos/chair-tp.mp4"-->
+<!--                    type="video/mp4">-->
+<!--          </video>-->
+<!--        </div>-->
+<!--        <div class="item item-shiba">-->
+<!--          <video poster="" id="shiba" autoplay controls muted loop playsinline height="100%">-->
+<!--            <source src="./static/videos/shiba.mp4"-->
+<!--                    type="video/mp4">-->
+<!--          </video>-->
+<!--        </div>-->
+<!--        <div class="item item-fullbody">-->
+<!--          <video poster="" id="fullbody" autoplay controls muted loop playsinline height="100%">-->
+<!--            <source src="./static/videos/fullbody.mp4"-->
+<!--                    type="video/mp4">-->
+<!--          </video>-->
+<!--        </div>-->
+<!--        <div class="item item-blueshirt">-->
+<!--          <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%">-->
+<!--            <source src="./static/videos/blueshirt.mp4"-->
+<!--                    type="video/mp4">-->
+<!--          </video>-->
+<!--        </div>-->
+<!--        <div class="item item-mask">-->
+<!--          <video poster="" id="mask" autoplay controls muted loop playsinline height="100%">-->
+<!--            <source src="./static/videos/mask.mp4"-->
+<!--                    type="video/mp4">-->
+<!--          </video>-->
+<!--        </div>-->
+<!--        <div class="item item-coffee">-->
+<!--          <video poster="" id="coffee" autoplay controls muted loop playsinline height="100%">-->
+<!--            <source src="./static/videos/coffee.mp4"-->
+<!--                    type="video/mp4">-->
+<!--          </video>-->
+<!--        </div>-->
+<!--        <div class="item item-toby">-->
+<!--          <video poster="" id="toby" autoplay controls muted loop playsinline height="100%">-->
+<!--            <source src="./static/videos/toby2.mp4"-->
+<!--                    type="video/mp4">-->
+<!--          </video>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</section>-->
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            How does audio describe the world around us? In this paper, we explore the task of generating an image of the visual
+            scenery that sound comes from. However, this task has inherent challenges, such as a significant modality gap between
+            audio and visual signals, and audio lacks explicit visual information inside.
+            We propose <span class="dnerf">Sound2Scene</span>, a model that works by scheduling the learning procedure of each model component to associate audio-visual modalities despite their information gaps.
+            The key idea is to enrich the audio features with visual information by learning to align audio to visual latent space.
+            Thereby, we translate input audio to visual feature, followed by a powerful pre-trained generator to generate an image.
+            We further incorporate a highly correlated audio-visual pair selection method to stabilize the training. As a result, our method demonstrates substantially better quality in a large
+            number of categories on VEGAS and VGGSound datasets, compared to the prior arts of sound-to-image generation.
+            Besides, we show the spontaneously learned output controllability of our method by applying simple manipulations on the input in the waveform space or latent space.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <!-- Paper video. -->
+    <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Need to add an presentation video this part!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+<!--    <div class="columns is-centered has-text-centered">-->
+<!--      <div class="column is-four-fifths">-->
+<!--        <h2 class="title is-3">Video</h2>-->
+<!--        <div class="publication-video">-->
+<!--          <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"-->
+<!--                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+        <div class="column is-full-width">
+        <h2 class="title is-3">Method</h2>
+        <div class="column is-full-width">
+        <img src="./static/images/method.png"
+                 class="interpolation-image"
+                 alt="Interpolate start reference image."/><br><br>
+        <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+          <div class="content has-text-justified">
+          <p>
+            We propose <span class="dnerf">Sound2Scene</span> and its training procedure for generating images from the input sound.
+            First, given an image encoder pre-trained in a self-supervised way, we train a conditional generative adversarial
+            network to generate images from visual embedding vectors of the image encoder.
+            We then train an audio encoder to translate an input sound to its corresponding visual embedding vector,
+            by aligning the audio to the visual space.
+            Afterwards, we can generate diverse images from sound by
+            translating from audio to visual embeddings and synthesizing an image.
+            Since <span class="dnerf">Sound2Scene</span> must be capable of learning from challenging in-the-wild videos, we use sound source
+            localization to select moments in time that have strong cross-modal associations.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Animation. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Waveform Manipulation for Image Generation</h2>
+
+        <!-- Single Waveform. -->
+        <div class="content has-text-justified">
+        <h3 class="title is-4">Single Waveform</h3>
+
+          <p>
+            <span class="dnerf">Sound2Scene</span> generates diverse images in a wide variety of categories from generic input sounds.
+          </p>
+        </div>
+        <table style="margin-left:auto;margin-right:auto;">
+
+          <tr>
+            <td>
+              <img src="./static/images/single/church1.png", height="150px", width="150px">&nbsp&nbsp<br>
+              <img src="./static/images/single/church2.png", height="150px", width="150px">&nbsp&nbsp<br>
+            <audio controls style="width: 140px">
+              <source src="./static/audio/single/church.wav">&nbsp&nbsp
+            </audio>
+              <p><strong>Churchbell Ringing</strong></p>
+            </td>
+
+            <td>
+              <img src="./static/images/single/cow1.png", height="150px", width="150px">&nbsp&nbsp<br>
+              <img src="./static/images/single/cow2.png", height="150px", width="150px">&nbsp&nbsp<br>
+            <audio controls style="width: 140px">
+              <source src="./static/audio/single/cow.wav">&nbsp&nbsp
+            </audio>
+              <p><strong>Cow Lowing</strong></p>
+            </td>
+
+            <td>
+              <img src="./static/images/single/lawn1.png", height="150px", width="150px">&nbsp&nbsp<br>
+              <img src="./static/images/single/lawn2.png", height="150px", width="150px">&nbsp&nbsp<br>
+            <audio controls style="width: 140px">
+              <source src="./static/audio/single/lawn.wav">&nbsp&nbsp
+            </audio>
+              <p><strong>Lawn Mowing</strong></p>
+            </td>
+
+            <td>
+              <img src="./static/images/single/vol1.png", height="150px", width="150px">&nbsp&nbsp<br>
+              <img src="./static/images/single/vol2.png", height="150px", width="150px">&nbsp&nbsp<br>
+            <audio controls style="width: 140px">
+              <source src="./static/audio/single/vol.wav">&nbsp&nbsp
+            </audio>
+              <p><strong>Volcano Explosion</strong></p>
+            </td>
+
+            <td>
+              <img src="./static/images/single/scuba1.png", height="150px", width="150px">&nbsp&nbsp<br>
+              <img src="./static/images/single/scuba2.png", height="150px", width="150px">&nbsp&nbsp<br>
+            <audio controls style="width: 140px">
+              <source src="./static/audio/single/scuba.wav">&nbsp&nbsp
+            </audio>
+              <p><strong>Scuba Diving</strong></p>
+            </td>
+
+            <td>
+              <img src="./static/images/single/drum1.png", height="150px", width="150px">&nbsp&nbsp<br>
+              <img src="./static/images/single/drum2.png", height="150px", width="150px">&nbsp&nbsp<br>
+            <audio controls style="width: 140px">
+              <source src="./static/audio/single/drum.wav">&nbsp&nbsp
+            </audio>
+              <p><strong>Playing Timbales</strong></p>
+            </td>
+          </tr>
+        </table>
+
+        <br/>
+        <!-- Single Waveform. -->
+
+
+        <!-- VOLUME CHANGES. -->
+        <div class="content has-text-justified">
+        <h3 class="title is-4">Volume Changes</h3>
+          <p>
+            Just as humans can roughly predict the distance or the size of an instance by the volume of the sound,
+            <span class="dnerf">Sound2Scene</span> can understand the relation between the volume of the audio and visual changes.
+          </p>
+          <p style="color:red;"><strong style="color:red;"> &#9888 Please pause the video and adjust the volume. There are large volume sounds.</strong>
+          </p>
+        </div>
+        <table style="margin-left:auto;margin-right:auto;">
+
+          <tr>
+            <td>
+              <img src="./static/images/volume/airplane_1.png", height="150px", width="150px">&nbsp<br>
+            <audio controls style="width: 140px">
+              <source src="./static/audio/volume/air1.wav">&nbsp
+            </audio>
+            </td>
+            <td><img src="./static/images/volume/airplane_2.png", height="150px", width="150px">&nbsp<br>
+            <audio controls style="width: 140px">
+              <source src="./static/audio/volume/air5.wav">&nbsp
+            </audio>
+            </td>
+            <td><img src="./static/images/volume/airplane_3.png", height="150px", width="150px">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<br>
+            <audio controls style="width: 140px">
+              <source src="./static/audio/volume/air9.wav">
+            </audio>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+            </td>
+
+            <td><img src="./static/images/volume/train_1.png", height="150px", width="150px">&nbsp<br>
+            <audio controls style="width: 140px">
+              <source src="./static/audio/volume/train1.wav">&nbsp
+            </audio>
+            </td>
+            <td><img src="./static/images/volume/train_2.png", height="150px", width="150px">&nbsp<br>
+            <audio controls style="width: 140px">
+              <source src="./static/audio/volume/train3.wav">&nbsp
+            </audio>
+            </td>
+            <td><img src="./static/images/volume/train_3.png", height="150px", width="150px"><br>
+            <audio controls style="width: 140px">
+              <source src="./static/audio/volume/train5.wav">
+            </audio>
+            </td>
+          </tr>
+
+          <tr>
+            <td><img src="./static/images/volume/water_1.png", height="150px", width="150px">&nbsp<br>
+            <audio controls style="width: 140px">
+              <source src="./static/audio/volume/water1.wav">&nbsp
+            </audio>
+            </td>
+            <td><img src="./static/images/volume/water_2.png", height="150px", width="150px">&nbsp<br>
+            <audio controls style="width: 140px">
+              <source src="./static/audio/volume/water3.wav">&nbsp
+            </audio>
+            </td>
+            <td><img src="./static/images/volume/water_3.png", height="150px", width="150px">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<br>
+            <audio controls style="width: 140px">
+              <source src="./static/audio/volume/water5.wav">
+            </audio>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+            </td>
+
+            <td><img src="./static/images/volume/elk_1.png", height="150px", width="150px">&nbsp<br>
+            <audio controls style="width: 140px">
+              <source src="./static/audio/volume/elk1.wav">&nbsp
+            </audio>
+            </td>
+            <td><img src="./static/images/volume/elk_2.png", height="150px", width="150px">&nbsp<br>
+            <audio controls style="width: 140px">
+              <source src="./static/audio/volume/elk5.wav">&nbsp
+            </audio>
+            </td>
+            <td><img src="./static/images/volume/elk_3.png", height="150px", width="150px"><br>
+            <audio controls style="width: 140px">
+              <source src="./static/audio/volume/elk9.wav">
+            </audio>
+            </td>
+          </tr>
+        </table>
+
+        <br/>
+        <!-- VOLUME CHANGES. -->
+
+        <!-- MIXING AUDIOS. -->
+        <div class="content has-text-justified">
+        <h3 class="title is-4">Mixing Waveforms</h3>
+          <p>
+            <span class="dnerf">Sound2Scene</span> can capture the existence of multiple sound sources and reflect them in the generated images.
+          </p>
+        </div>
+        <table style="margin-left:auto;margin-right:auto;">
+
+          <tr>
+            <td>
+              <img src="./static/images/mix/dog_water3.png", height="150px", width="150px">&nbsp&nbsp<br>
+              <img src="./static/images/mix/dog_water4.png", height="150px", width="150px">&nbsp&nbsp<br>
+            <audio controls style="width: 140px">
+              <source src="./static/audio/mix/dog_water.wav">&nbsp&nbsp
+            </audio>
+              <p><strong>Dog+Water Flowing</strong></p>
+            </td>
+
+            <td>
+              <img src="./static/images/mix/baby_water3.png", height="150px", width="150px">&nbsp&nbsp<br>
+              <img src="./static/images/mix/baby_water4.png", height="150px", width="150px">&nbsp&nbsp<br>
+            <audio controls style="width: 140px">
+              <source src="./static/audio/mix/baby_water.wav">&nbsp&nbsp
+            </audio>
+              <p><strong>Baby+Water Flowing</strong></p>
+            </td>
+
+            <td>
+              <img src="./static/images/mix/ski_water3.png", height="150px", width="150px">&nbsp&nbsp<br>
+              <img src="./static/images/mix/ski_water4.png", height="150px", width="150px">&nbsp&nbsp<br>
+            <audio controls style="width: 140px">
+              <source src="./static/audio/mix/train_ski.wav">&nbsp&nbsp
+            </audio>
+              <p><strong>Train+Skiing</strong></p>
+            </td>
+
+            <td>
+              <img src="./static/images/mix/train_hail_.png", height="150px", width="150px">&nbsp&nbsp<br>
+              <img src="./static/images/mix/train_hail2_.png", height="150px", width="150px">&nbsp&nbsp<br>
+            <audio controls style="width: 140px">
+              <source src="./static/audio/mix/train_hail.wav">&nbsp&nbsp
+            </audio>
+              <p><strong>Train+Hail</strong></p>
+            </td>
+
+            <td>
+              <img src="./static/images/mix/bird_ski.png", height="150px", width="150px">&nbsp&nbsp<br>
+              <img src="./static/images/mix/bird_ski2.png", height="150px", width="150px">&nbsp&nbsp<br>
+            <audio controls style="width: 140px">
+              <source src="./static/audio/mix/bird_ski.wav">&nbsp&nbsp
+            </audio>
+              <p><strong>Bird+Skiing</strong></p>
+            </td>
+
+            <td>
+              <img src="./static/images/mix/bird_hail2.png", height="150px", width="150px">&nbsp&nbsp<br>
+              <img src="./static/images/mix/bird_hail1.png", height="150px", width="150px">&nbsp&nbsp<br>
+            <audio controls style="width: 140px">
+              <source src="./static/audio/mix/bird_hail.wav">&nbsp&nbsp
+            </audio>
+              <p><strong>Bird+Hail</strong></p>
+            </td>
+          </tr>
+        </table>
+        </div>
+        <!--/ Re-rendering. -->
+
+      </div>
+    </div>
+    <!--/ Animation. -->
+
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Animation. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Latent Manipulation for Image Generation</h2>
+
+        <!-- Image and audio conditioned. -->
+        <div class="content has-text-justified">
+        <h3 class="title is-4">Image and Audio Conditioned Image Generation</h3>
+          <p>
+            With a simple latent interpolation between audio and visual features,
+            <span class="dnerf">Sound2Scene</span> can generate novel images by conditioning on both audio-visual signals.
+          </p>
+        </div>
+        <table>
+          <tr>
+
+            <table style="margin-left:auto;margin-right:auto;">
+                <td>
+                  <p><strong>Input</strong>&nbsp; &nbsp; &nbsp; &nbsp;</p>
+                  <img src="./static/images/stylize/build.jpg", height="100px", width="100px">&nbsp; &nbsp; &nbsp; &nbsp;<br>
+                  <audio controls style="width: 100px">
+                  <source src="./static/audio/stylize/cheer.wav">
+                  </audio>&nbsp; &nbsp; &nbsp; &nbsp;
+                </td>
+                <td>
+                  <p><strong>Generated Images</strong>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;</p>
+                  <img src="./static/images/stylize/build1.png", height="150px", width="300px">&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;<br>
+                </td>
+
+              <td>
+                <p><strong>Input</strong>&nbsp; &nbsp; &nbsp; &nbsp;</p>
+                  <img src="./static/images/stylize/build.jpg", height="100px", width="100px">&nbsp; &nbsp; &nbsp; &nbsp;<br>
+                  <audio controls style="width: 100px">
+                  <source src="./static/audio/stylize/under.wav">
+                  </audio>&nbsp; &nbsp; &nbsp; &nbsp;
+                <td>
+                  <p><strong>Generated Images</strong></p>
+                  <img src="./static/images/stylize/build2.png", height="150px", width="300px"><br>
+                </td>
+              </table>
+
+            <table style="margin-left:auto;margin-right:auto;">
+                <td>
+                  <img src="./static/images/stylize/beach.png", height="100px", width="100px">&nbsp; &nbsp; &nbsp; &nbsp;<br>
+                  <audio controls style="width: 100px">
+                  <source src="./static/audio/stylize/vol.wav">
+                  </audio>&nbsp; &nbsp; &nbsp; &nbsp;
+                </td>
+                <td>
+                  <img src="./static/images/stylize/beach1.png", height="150px", width="300px">&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;<br>
+                </td>
+
+              <td>
+                  <img src="./static/images/stylize/beach.png", height="100px", width="100px">&nbsp; &nbsp; &nbsp; &nbsp;<br>
+                  <audio controls style="width: 100px">
+                  <source src="./static/audio/stylize/tractor.wav">
+                  </audio>&nbsp; &nbsp; &nbsp; &nbsp;
+                <td>
+                  <img src="./static/images/stylize/beach2.png", height="150px", width="300px"><br>
+                </td>
+              </table>
+
+        <table style="margin-left:auto;margin-right:auto;">
+                <td>
+                  <img src="./static/images/stylize/snow.png", height="100px", width="100px">&nbsp; &nbsp; &nbsp; &nbsp;<br>
+                  <audio controls style="width: 100px">
+                  <source src="./static/audio/stylize/elk.wav">
+                  </audio>&nbsp; &nbsp; &nbsp; &nbsp;
+                </td>
+                <td>
+                  <img src="./static/images/stylize/snow2.png", height="150px", width="300px">&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;<br>
+                </td>
+
+              <td>
+                  <img src="./static/images/stylize/snow.png", height="100px", width="100px">&nbsp; &nbsp; &nbsp; &nbsp;<br>
+                  <audio controls style="width: 100px">
+                  <source src="./static/audio/stylize/march.wav">
+                  </audio>&nbsp; &nbsp; &nbsp; &nbsp;
+                <td>
+                  <img src="./static/images/stylize/snow1.png", height="150px", width="300px"><br>
+                </td>
+              </table>
+
+        <br/>
+
+            <!-- Image Editing With Paired Sound. -->
+        <div class="content has-text-justified">
+        <h3 class="title is-4">Image Editing with Paired Sound</h3>
+          <p>
+            By moving the visual feature toward the direction of the volume difference between the two audio features,
+            <span class="dnerf">Sound2Scene</span> can edit the original image with the paired sound.
+          </p>
+        </div>
+        <table style="margin-left:auto;margin-right:auto;">
+
+          <tr>
+            <td>
+              <img src="./static/images/edit/vol1.png", height="177px", width="354px">&nbsp&nbsp
+              <img src="./static/images/edit/left.png", height="177px", width="354px">&nbsp&nbsp
+              <p><strong>Volume Decrease Direction</strong></p><br>
+              <img src="./static/images/edit/ocean1.png", height="177px", width="354px">&nbsp&nbsp
+              <img src="./static/images/edit/left.png", height="177px", width="354px">&nbsp&nbsp
+              <p><strong>Volume Decrease Direction</strong></p><br>
+              <img src="./static/images/edit/fall1.png", height="177px", width="354px">&nbsp&nbsp
+              <img src="./static/images/edit/left.png", height="177px", width="354px">&nbsp&nbsp
+              <p><strong>Volume Decrease Direction</strong></p><br>
+            </td>
+
+            <td>
+              <img src="./static/images/edit/vol.png", height="152px", width="152px">&nbsp&nbsp
+              <audio controls style="width: 140px">
+              <source src="./static/audio/mix/train_ski.wav">
+            </audio>&nbsp&nbsp<br><br>
+
+              <img src="./static/images/edit/ocean.png", height="152px", width="152px">&nbsp&nbsp
+              <audio controls style="width: 140px">
+              <source src="./static/audio/mix/train_ski.wav">
+            </audio>&nbsp&nbsp<br><br>
+
+              <img src="./static/images/edit/fall.png", height="152px", width="152px">&nbsp&nbsp
+              <audio controls style="width: 140px">
+              <source src="./static/audio/mix/train_ski.wav">
+            </audio>&nbsp&nbsp<br><br>
+            </td>
+
+           <td>
+              <img src="./static/images/edit/vol2.png", height="177px", width="354px">
+              <img src="./static/images/edit/right.png", height="177px", width="354px">
+             <p><strong>Volume Increase Direction</strong></p><br>
+              <img src="./static/images/edit/ocean2.png", height="177px", width="354px">
+              <img src="./static/images/edit/right.png", height="177px", width="354px">
+             <p><strong>Volume Increase Direction</strong></p><br>
+              <img src="./static/images/edit/fall2.png", height="177px", width="354px">
+              <img src="./static/images/edit/right.png", height="177px", width="354px">
+             <p><strong>Volume Increase Direction</strong></p><br>
+            </td>
+
+            </td>
+          </tr>
+        </table>
+        </div>
+        <!--/ Re-rendering. -->
+
+
+
+
+<!--        &lt;!&ndash; VOLUME CHANGES. &ndash;&gt;&lt;!&ndash; Interpolating. &ndash;&gt;-->
+<!--        <div class="content has-text-justified">-->
+<!--          <h3 class="title is-4">Interpolating states</h3>-->
+
+<!--          <p>-->
+<!--            We can also animate the scene by interpolating the deformation latent codes of two input-->
+<!--            frames. Use the slider here to linearly interpolate between the left frame and the right-->
+<!--            frame.-->
+<!--          </p>-->
+
+<!--        </div>-->
+<!--        <div class="columns is-vcentered interpolation-panel">-->
+<!--          <div class="column is-3 has-text-centered">-->
+<!--            <img src="./static/images/interpolate_start.jpg"-->
+<!--                 class="interpolation-image"-->
+<!--                 alt="Interpolate start reference image."/>-->
+<!--            <p>Start Frame</p>-->
+<!--          </div>-->
+<!--          <div class="column interpolation-video-column">-->
+<!--            <div id="interpolation-image-wrapper">-->
+<!--              Loading...-->
+<!--            </div>-->
+<!--            <input class="slider is-fullwidth is-large is-info"-->
+<!--                   id="interpolation-slider"-->
+<!--                   step="1" min="0" max="6" value="2" type="range">-->
+<!--          </div>-->
+<!--          <div class="column is-3 has-text-centered">-->
+<!--            <img src="./static/images/interpolate_end.jpg"-->
+<!--                 class="interpolation-image"-->
+<!--                 alt="Interpolation end reference image."/>-->
+<!--            <p class="is-bold">End Frame</p>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <br/>-->
+<!--        &lt;!&ndash;/ Interpolating. &ndash;&gt;-->
+
+      </div>
+    </div>
+    <!--/ Animation. -->
+
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{park2021nerfies,
+  author    = {Sung-Bin, Kim and Senocak, Arda and Ha, Hyunwoo and Owens, Andrew and Oh, Tae-Hyun},
+  title     = {Sound to Visual Scene Generation by Audio-to-Visual Latent Alignment},
+  journal   = {CVPR},
+  year      = {2023},
+}</code></pre>
+  </div>
+</section>
+
+
+<section class="section" id="Acknowledgment">
+  <div class="container is-max-desktop content">
+    <h2 class="title">Acknowledgment</h2>
+    <p>
+      This work was supported by IITP grant funded by Korea government (MSIT) (No.2021-0-02068, Artificial Intelligence Innovation Hub; No.2022-0-00124, Development of Artificial Intelligence Technology for Self-Improving Competency-Aware Learning Capabilities). The GPU resource was supported by the HPC Support Project, MSIT and NIPA.
+    </p>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="./static/videos/nerfies_paper.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+<!--      <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>-->
+            <a class="icon-link" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+            <br>
+              Source code mainly borrowed from <a
+              href="https://github.com/nerfies/nerfies.github.io">Nerfies</a> website.
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
