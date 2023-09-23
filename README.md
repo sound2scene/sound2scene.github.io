@@ -1,13 +1,11 @@
-# Nerfies
-
-This is the repository that contains source code for the [Nerfies website](https://nerfies.github.io).
+# Sound2Scene
 
 If you find Nerfies useful for your work please cite:
 ```
-@article{park2021nerfies,
+@inproceeding{sund2023sound,
   author    = {Sung-Bin, Kim and Senocak, Arda and Ha, Hyunwoo and Owens, Andrew and Oh, Tae-Hyun},
   title     = {Sound to Visual Scene Generation by Audio-to-Visual Latent Alignment},
-  journal   = {CVPR},
+  booktitle   = {IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
   year      = {2023},
 }
 ```
